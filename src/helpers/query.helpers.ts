@@ -1,16 +1,10 @@
-import { Task } from "../model/task.model";
-
-export function paginateData(data: Task[], page: number, limit: number) {
+export function paginateData<T>(data: T[], page: number, limit: number) {
   const start = (page - 1) * limit;
   const end = page * limit;
   return data.slice(start, end);
 }
 
-export function sortData(
-  data: Task[],
-  order: "asc" | "desc",
-  sort_by: keyof Omit<Task, "message" | "completed">
-) {
+export function sortData<T>(data: T[], order: "asc" | "desc", sort_by: "id") {
   return data.sort((a, b) => {
     if (order === "asc") {
       return a[sort_by] - b[sort_by];

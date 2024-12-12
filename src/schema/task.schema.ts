@@ -24,7 +24,7 @@ export const TaskUpdateSchema = z.object({
   }),
 });
 
-const TaskQuerySchema = z.object({
+export const TaskGetAllSchema = z.object({
   query: z
     .object({
       page: z.string().optional(),
@@ -46,9 +46,3 @@ const TaskQuerySchema = z.object({
       return true;
     }),
 });
-
-export const GetTasksSchema = TaskQuerySchema;
-
-export type ICreateTask = z.infer<typeof TaskCreateSchema>;
-export type IUpdateTask = z.infer<typeof TaskUpdateSchema>;
-export type IGetTasks = z.infer<typeof GetTasksSchema>;

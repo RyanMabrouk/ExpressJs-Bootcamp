@@ -3,10 +3,12 @@ import {
   deleteTaskFromDb,
   getTaskByIdFromDb,
   getTasksFromDb,
+  NewTask,
+  SortTasksBy,
   Task,
+  UpdateTask,
   updateTaskFromDb,
 } from "../model/task.model";
-import { ICreateTask } from "../schema/task.schema";
 
 export async function getTasks({
   page,
@@ -17,7 +19,7 @@ export async function getTasks({
   page: number;
   limit: number;
   sort?: "asc" | "desc";
-  sort_by?: keyof Omit<Task, "message" | "completed">;
+  sort_by?: SortTasksBy;
 }) {
   const data = await getTasksFromDb({ page, limit, sort, sort_by });
   return data;
@@ -27,17 +29,14 @@ export async function getTaskById(id: number) {
   return await getTaskByIdFromDb(id);
 }
 
-export async function createTask(task: {
-  message: string;
-  completed: boolean;
-}) {
+export async function createTask(task: NewTask) {
   return await createTaskFromDb(task);
 }
 
-export async function updateTask(id: number, task: Task) {
+export async function updateTask(id: number, task: UpdateTask) {
   return await updateTaskFromDb(id, task);
 }
 
-export function deleteTask(id: number) {
-  return deleteTaskFromDb(id);
+export async function deleteTask(id: number) {
+  return await deleteTaskFromDb(id);
 }

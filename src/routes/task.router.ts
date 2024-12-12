@@ -5,10 +5,10 @@ import {
   handleGetTaskById,
   handleGetTasks,
   handleUpdateTask,
-} from "../controllers/tasks.controller";
+} from "../controllers/task.controller";
 import validate from "../helpers/validate";
 import {
-  GetTasksSchema,
+  TaskGetAllSchema,
   TaskCreateSchema,
   TaskUpdateSchema,
 } from "../schema/task.schema";
@@ -16,10 +16,10 @@ import {
 const router = Router();
 
 router
-  .get("/", [validate(GetTasksSchema)], handleGetTasks)
+  .get("/", [validate(TaskGetAllSchema)], handleGetTasks)
   .get("/:id", handleGetTaskById)
   .post("/", [validate(TaskCreateSchema)], handleCreateTask)
-  .put("/:id", [validate(TaskUpdateSchema)], handleUpdateTask)
+  .patch("/:id", [validate(TaskUpdateSchema)], handleUpdateTask)
   .delete("/:id", handleDeleteTask);
 
 export default router;

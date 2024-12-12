@@ -7,11 +7,10 @@ import {
   updateTask,
 } from "../services/task.service";
 import { Task } from "../model/task.model";
-import { ICreateTask } from "../schema/task.schema";
 
 async function handleGetTasks(req: Request, res: Response): Promise<void> {
-  const page = parseInt(req.query.page as string);
-  const limit = parseInt(req.query.limit as string);
+  const page = parseInt((req.query.page as string | undefined) ?? "1");
+  const limit = parseInt((req.query.limit as string | undefined) ?? "10");
   const sort = req.query.sort as "asc" | "desc";
   const sort_by = req.query.sort_by as keyof Omit<
     Task,
@@ -23,7 +22,7 @@ async function handleGetTasks(req: Request, res: Response): Promise<void> {
 
 async function handleGetTaskById(req: Request, res: Response) {
   const id = parseInt(req.params.id);
-  const task = getTaskById(id);
+  const task = await getTaskById(id);
   res.json(task);
 }
 
